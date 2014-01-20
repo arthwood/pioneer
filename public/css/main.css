@@ -1,0 +1,19 @@
+body {
+  padding: 20px;
+}
+
+#funds {
+  float: right;
+  width: 400px;
+  height: 600px;
+  overflow: auto;
+}
+
+#funds li.list-group-item {
+  padding: 4px 6px;
+}
+
+#chart {
+  width: 800px;
+  height: 600px;
+}
