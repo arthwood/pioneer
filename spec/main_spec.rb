@@ -12,6 +12,6 @@ describe Pioneer::Main do
   it 'should pass' do
     get '/'
     
-    expect(last_response.status).to be(200)
+    expect(last_response.status).to eq(200)
   end
 end

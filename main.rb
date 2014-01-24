@@ -21,7 +21,7 @@ module Pioneer
 
       content_type :json
 
-      service.get(params[:id]).map {|i| {date: i.date, value: i.value}}.to_json
+      service.get(params[:id]).map {|i| {date: i.date, value: i.value.present? ? i.value.to_f : nil}}.to_json
     end
   end
 end

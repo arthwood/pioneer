@@ -1,3 +1,10 @@
+test:
+  sessions:
+    default:
+      database: pioneer_test
+      hosts:
+        - localhost:27017
+
 development:
   sessions:
     default:

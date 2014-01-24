@@ -14,22 +14,21 @@ module Pioneer
         header.shift
         fund_names = header
         cols = rows.transpose
-        dates = cols.shift
-        
-        Pioneer::Model::Fund.delete_all
-        Pioneer::Model::Item.delete_all
+        dates = cols.shift.map {|i| Date.parse(i)}
         
         fund_names.each_with_index do |name, idx|
           name = name.encode('utf-8', 'iso-8859-2')
-          fund = Pioneer::Model::Fund.create(name: name)
+          fund = Pioneer::Model::Fund.find_or_create_by(name: name)
           p name
+          
           cols[idx] = cols[idx].map { |i| i == 'bd' ? nil : i }
-
-          Pioneer::Model::Item.create(
-            dates.zip(cols[idx]).map do |date, value|
-              {fund_id: fund.id, date: date, value: value && value.gsub(',', '.')}
-            end
-          )
+          data_set = dates.zip(cols[idx])
+          last_item = fund.items.last
+          last_date = last_item && last_item.date
+          data_set = data_set.select {|date, value| last_date.nil? || date > last_date}
+          data_set.map do |date, value|
+            fund.items.create(date: date, value: value && value.gsub(',', '.'))
+          end
         end
       end
     end

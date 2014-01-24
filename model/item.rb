@@ -12,7 +12,6 @@ module Pioneer
       belongs_to :fund, class_name: 'Pioneer::Model::Fund'
 
       validates :date, presence: true, uniqueness: {scope: :fund_id}
-      validates :value, presence: true
     end
   end
 end
